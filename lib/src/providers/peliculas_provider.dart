@@ -9,6 +9,15 @@ class PeliculasProvider {
   String _url = "api.themoviedb.org";
   String _language = "es-Es";
 
+  Future<List<Pelicula>> _procesarRespuesta(Uri url) async {
+    final resp = await http.get(url);
+    final decodedData = json.decode(resp.body);
+    final peliculas = new Peliculas.fromJsonList(decodedData["results"]);
+    return peliculas.items;
+
+  }
+
+
   //Llamado al EndPoint
   Future<List<Pelicula>> getEnCines() async {
     //Uri es un objeto de dart para manipular url
@@ -16,20 +25,13 @@ class PeliculasProvider {
     final url = Uri.https(_url, "3/movie/now_playing",
         {"api_key": _apiKey, "language": _language});
     //Aquí se va a  hacer la petición http, se debe instalar el paquete http  https://pub.dev/packages/http
-    final resp = await http.get(url);
-    final decodedData = json.decode(resp.body);
-    final peliculas = new Peliculas.fromJsonList(decodedData["results"]);
-    //print(peliculas.items[2].title)
-    return peliculas.items;
+    return await _procesarRespuesta(url);
   }
 
   Future<List<Pelicula>> getPopular() async{
 
     final url = Uri.https(_url, "3/movie/popular",{
       "api_key": _apiKey, "language": _language});
-      final resp = await http.get(url);
-      final decodedData = json.decode(resp.body);
-      final peliculas = new Peliculas.fromJsonList(decodedData["results"]);
-      return peliculas.items;
+      return await _procesarRespuesta(url);
   }
 }
