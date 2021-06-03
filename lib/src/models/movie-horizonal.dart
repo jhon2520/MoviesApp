@@ -65,7 +65,13 @@ Widget _tarjeta(BuildContext context, Pelicula pelicula){
 
       return GestureDetector(
         child: tarjeta,
-        onTap: () => print("Nombre pelicula ${pelicula.title}"),
+        onTap: (){
+
+          //en el navigator estoy mandando la película a modo de argumento
+          //para que en la página detalle esta llegue con todas sus
+          //características y poderlas usar
+          Navigator.pushNamed(context, 'detalle',arguments: pelicula);
+        },
       );
 }
 
