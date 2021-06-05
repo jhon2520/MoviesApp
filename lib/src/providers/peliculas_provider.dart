@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:movies/src/models/actores_model.dart';
 import 'package:movies/src/models/pelicula_model.dart';
 
 class PeliculasProvider {
@@ -46,6 +47,7 @@ class PeliculasProvider {
 
   Future<List<Pelicula>> getPopular() async{
 
+
     if(_cargando) return[];
 
     _cargando = true;
@@ -64,4 +66,22 @@ class PeliculasProvider {
       return resp;
 
   }
+
+  Future<List<Actor>> getCast(String peliculaId) async {
+
+    final url = Uri.https(_url, "3/movie/$peliculaId/credits",{
+      "api_key": _apiKey, "language": _language
+    });
+    //obtener el http del url y con el await se espera la resputas
+    final resp = await http.get(url);
+    //convierte el json en un mapa
+    final decodedData = json.decode(resp.body);
+    //Apuntas a la propiedad CAST del json que se trae
+    final cast = new Cast.fromJsonList(decodedData["cast"]);
+
+    return cast.actores;
+
+
+  }
+
 }
