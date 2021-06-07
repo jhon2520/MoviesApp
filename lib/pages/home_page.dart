@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies/src/models/movie-horizonal.dart';
 import 'package:movies/src/providers/peliculas_provider.dart';
+import 'package:movies/src/search/search_delegate.dart';
 import 'package:movies/src/widgets/card_swiper_widget.dart';
 
 class HomePage extends StatelessWidget {
@@ -17,7 +18,12 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Peliculas en cine"),
         backgroundColor: Colors.indigo,
-        actions: [IconButton(icon: Icon(Icons.search), onPressed: () {})],
+        actions: [IconButton(icon: Icon(Icons.search), onPressed: () {
+          //Método propio de flutter para buscar, el delegate es una clase 
+          //abstracta que debe implementar ciertos métodos los cuales se hicieron,
+          //en este caso en la carpeta creada search en el archivo search_delegate
+          showSearch(context: context, delegate: DataSearch());
+        })],
       ),
       body: Container(
         child: Column(

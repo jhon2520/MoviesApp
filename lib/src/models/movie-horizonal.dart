@@ -38,17 +38,23 @@ class MovieHorizontal extends StatelessWidget {
   }
 
 Widget _tarjeta(BuildContext context, Pelicula pelicula){
+
+   pelicula.uniqueId = "${pelicula.id}-poster";
     final tarjeta =  Container(
         margin: EdgeInsets.only(right: 15.0),
         child: Column(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(15.0),
-              child: FadeInImage(
-                placeholder: AssetImage("assets/img/no-image.jpg"),
-                image: NetworkImage(pelicula.getPosterImg()),
-                fit: BoxFit.cover,
-                height: 100.0,
+            //el hero crea una transición de las tarjetas entre las páginas
+            Hero(
+              tag: pelicula.uniqueId ,
+                child: ClipRRect(
+                borderRadius: BorderRadius.circular(15.0),
+                child: FadeInImage(
+                  placeholder: AssetImage("assets/img/no-image.jpg"),
+                  image: NetworkImage(pelicula.getPosterImg()),
+                  fit: BoxFit.cover,
+                  height: 100.0,
+                ),
               ),
             ),
             SizedBox(
@@ -75,35 +81,4 @@ Widget _tarjeta(BuildContext context, Pelicula pelicula){
       );
 }
 
-/*
-  List<Widget> _tarjetas() {
-    return peliculas.map((pelicula) {
-      return Container(
-        margin: EdgeInsets.only(right: 15.0),
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(15.0),
-              child: FadeInImage(
-                placeholder: AssetImage("assets/img/no-image.jpg"),
-                image: NetworkImage(pelicula.getPosterImg()),
-                fit: BoxFit.cover,
-                height: 100.0,
-              ),
-            ),
-            SizedBox(
-              height: 5.0,
-            ),
-            Text(
-              pelicula.title,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 9),
-            )
-          ],
-        ),
-      );
-    }).toList();
-  }
-
-  */
 }

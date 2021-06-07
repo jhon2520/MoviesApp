@@ -20,6 +20,11 @@ class Peliculas {
 }
 
 class Pelicula {
+
+  //creo esta variable para que las tarjetas grandes y las pequeñas tengan un 
+  //id único estándo en la página incial
+  String uniqueId;
+
   String posterPath;
   bool adult;
   String overview;
